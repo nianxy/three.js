@@ -165,6 +165,7 @@ IncidentLight directLight;
 #if defined( RE_IndirectSpecular )
 
 	vec3 radiance = vec3( 0.0 );
+	vec3 radianceRefraction = vec3( 0.0 );
 	vec3 clearcoatRadiance = vec3( 0.0 );
 
 #endif

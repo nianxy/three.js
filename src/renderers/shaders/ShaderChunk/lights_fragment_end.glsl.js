@@ -16,4 +16,10 @@ export default /* glsl */`
 	);
 
 #endif
+
+#ifdef ENVMAP_MODE_REFLECTION
+
+reflectedLight.indirectDiffuse = mix(reflectedLight.indirectDiffuse, radianceRefraction * diffuseColor.rgb, refraction);
+
+#endif
 `;

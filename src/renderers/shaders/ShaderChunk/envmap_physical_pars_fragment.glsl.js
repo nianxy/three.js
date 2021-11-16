@@ -1,9 +1,7 @@
 export default /* glsl */`
 #if defined( USE_ENVMAP )
 
-	#ifdef ENVMAP_MODE_REFRACTION
-		uniform float refractionRatio;
-	#endif
+	uniform float refractionRatio;
 
 	vec3 getLightProbeIndirectIrradiance( /*const in SpecularLightProbe specularLightProbe,*/ const in vec3 geoNormal, const in int maxMIPLevel ) {
 
@@ -56,36 +54,23 @@ export default /* glsl */`
 
 	}
 
-	vec3 getLightProbeIndirectRadiance( /*const in SpecularLightProbe specularLightProbe,*/ const in vec3 viewDir, const in vec3 normal, const in float roughness, const in int maxMIPLevel ) {
+	vec3 getLightProbeIndirectRadiance( const in vec3 outVec, const in float roughness, const in int maxMIPLevel ) {
 
-		#ifdef ENVMAP_MODE_REFLECTION
-
-		  vec3 reflectVec = reflect( -viewDir, normal );
-
-		  // Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
-		  reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
-
-		#else
-
-		  vec3 reflectVec = refract( -viewDir, normal, refractionRatio );
-
-		#endif
-
-		reflectVec = inverseTransformDirection( reflectVec, viewMatrix );
+		vec3 worldOutVec = inverseTransformDirection( outVec, viewMatrix );
 
 		float specularMIPLevel = getSpecularMIPLevel( roughness, maxMIPLevel );
 
 		#ifdef ENVMAP_TYPE_CUBE
 
-			vec3 queryReflectVec = vec3( flipEnvMap * reflectVec.x, reflectVec.yz );
+			vec3 queryWorldOutVec = vec3( flipEnvMap * worldOutVec.x, worldOutVec.yz );
 
 			#ifdef TEXTURE_LOD_EXT
 
-				vec4 envMapColor = textureCubeLodEXT( envMap, queryReflectVec, specularMIPLevel );
+				vec4 envMapColor = textureCubeLodEXT( envMap, queryWorldOutVec, specularMIPLevel );
 
 			#else
 
-				vec4 envMapColor = textureCube( envMap, queryReflectVec, specularMIPLevel );
+				vec4 envMapColor = textureCube( envMap, queryWorldOutVec, specularMIPLevel );
 
 			#endif
 
@@ -93,13 +78,13 @@ export default /* glsl */`
 
 		#elif defined( ENVMAP_TYPE_CUBE_UV )
 
-			vec4 envMapColor = textureCubeUV( envMap, reflectVec, roughness );
+			vec4 envMapColor = textureCubeUV( envMap, worldOutVec, roughness );
 
 		#elif defined( ENVMAP_TYPE_EQUIREC )
 
 			vec2 sampleUV;
-			sampleUV.y = asin( clamp( reflectVec.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
-			sampleUV.x = atan( reflectVec.z, reflectVec.x ) * RECIPROCAL_PI2 + 0.5;
+			sampleUV.y = asin( clamp( worldOutVec.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
+			sampleUV.x = atan( worldOutVec.z, worldOutVec.x ) * RECIPROCAL_PI2 + 0.5;
 
 			#ifdef TEXTURE_LOD_EXT
 
@@ -115,15 +100,15 @@ export default /* glsl */`
 
 		#elif defined( ENVMAP_TYPE_SPHERE )
 
-			vec3 reflectView = normalize( ( viewMatrix * vec4( reflectVec, 0.0 ) ).xyz + vec3( 0.0,0.0,1.0 ) );
+			vec3 worldOutView = normalize( ( viewMatrix * vec4( worldOutVec, 0.0 ) ).xyz + vec3( 0.0,0.0,1.0 ) );
 
 			#ifdef TEXTURE_LOD_EXT
 
-				vec4 envMapColor = texture2DLodEXT( envMap, reflectView.xy * 0.5 + 0.5, specularMIPLevel );
+				vec4 envMapColor = texture2DLodEXT( envMap, worldOutView.xy * 0.5 + 0.5, specularMIPLevel );
 
 			#else
 
-				vec4 envMapColor = texture2D( envMap, reflectView.xy * 0.5 + 0.5, specularMIPLevel );
+				vec4 envMapColor = texture2D( envMap, worldOutView.xy * 0.5 + 0.5, specularMIPLevel );
 
 			#endif
 
@@ -132,6 +117,30 @@ export default /* glsl */`
 		#endif
 
 		return envMapColor.rgb * envMapIntensity;
+
+	}
+
+	vec3 getLightProbeIndirectRadianceReflection( /*const in SpecularLightProbe specularLightProbe,*/ const in vec3 viewDir, const in vec3 normal, const in float roughness, const in int maxMIPLevel ) {
+
+		vec3 reflectVec = reflect( -viewDir, normal );
+		reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
+
+		return getLightProbeIndirectRadiance(reflectVec, roughness, maxMIPLevel);
+
+	}
+
+	vec3 refract2(vec3 viewVec, vec3 Normal, float IOR) {
+		float vn = dot(viewVec, Normal);
+		float k = 1.0 - IOR * IOR * (1.0 - vn * vn);
+		vec3 refrVec = IOR * viewVec - (IOR * vn + sqrt(k)) * Normal;
+		return refrVec;
+	}
+
+	vec3 getLightProbeIndirectRadianceRefraction( /*const in SpecularLightProbe specularLightProbe,*/ const in vec3 viewDir, const in vec3 normal, const in float roughness, const in int maxMIPLevel ) {
+
+		vec3 refractVec = refract2( -viewDir, normal, refractionRatio );
+
+		return getLightProbeIndirectRadiance(refractVec, roughness, maxMIPLevel);
 
 	}
 

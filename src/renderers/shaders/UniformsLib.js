@@ -33,6 +33,7 @@ var UniformsLib = {
 		flipEnvMap: { value: - 1 },
 		reflectivity: { value: 1.0 },
 		refractionRatio: { value: 0.98 },
+		refraction: { value: 0.0 },
 		maxMipLevel: { value: 0 }
 
 	},
