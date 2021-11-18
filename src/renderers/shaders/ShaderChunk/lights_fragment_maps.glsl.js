@@ -26,11 +26,28 @@ export default /* glsl */`
 
 #if defined( USE_ENVMAP ) && defined( RE_IndirectSpecular )
 
-	radiance += getLightProbeIndirectRadiance( /*specularLightProbe,*/ geometry.viewDir, splitGeoNormal, material.specularRoughness, maxMipLevel );
+	#ifdef ENVMAP_MODE_REFLECTION
+
+		radiance += getLightProbeIndirectRadianceReflection( /*specularLightProbe,*/ geometry.viewDir, splitGeoNormal, material.specularRoughness, maxMipLevel );
+		radianceRefraction += getLightProbeIndirectRadianceRefraction( /*specularLightProbe,*/ geometry.viewDir, splitGeoNormal, material.specularRoughness, maxMipLevel );
+
+	#else
+
+		radiance += getLightProbeIndirectRadianceRefraction( /*specularLightProbe,*/ geometry.viewDir, splitGeoNormal, material.specularRoughness, maxMipLevel );
+
+	#endif
 
 	#ifdef CLEARCOAT
 
-		clearcoatRadiance += getLightProbeIndirectRadiance( /*specularLightProbe,*/ geometry.viewDir, splitGeoClearcoatNormal, material.clearcoatRoughness, maxMipLevel );
+		#ifdef ENVMAP_MODE_REFLECTION
+
+			clearcoatRadiance += getLightProbeIndirectRadianceReflection( /*specularLightProbe,*/ geometry.viewDir, splitGeoClearcoatNormal, material.clearcoatRoughness, maxMipLevel );
+
+		#else
+
+			clearcoatRadiance += getLightProbeIndirectRadianceRefraction( /*specularLightProbe,*/ geometry.viewDir, splitGeoClearcoatNormal, material.clearcoatRoughness, maxMipLevel );
+
+		#endif
 
 	#endif
 
