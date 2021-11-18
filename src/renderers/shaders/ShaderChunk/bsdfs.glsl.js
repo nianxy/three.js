@@ -69,13 +69,13 @@ vec3 F_Schlick( const in vec3 specularColor, const in float dotLH ) {
 
 } // validated
 
-vec3 F_Schlick_RoughnessDependent( const in vec3 F0, const in float dotNV, const in float roughness ) {
+vec3 F_Schlick_RoughnessDependent( const in vec3 F0, const in float dotNV, const in float roughness, const in float f90 ) {
 
 	// See F_Schlick
 	float fresnel = exp2( ( -5.55473 * dotNV - 6.98316 ) * dotNV );
 	vec3 Fr = max( vec3( 1.0 - roughness ), F0 ) - F0;
 
-	return Fr * fresnel + F0;
+	return Fr * fresnel * f90 + F0;
 
 }
 
@@ -277,11 +277,11 @@ vec3 BRDF_Specular_GGX_Environment( const in vec3 viewDir, const in vec3 normal,
 // Fdez-Agüera's "Multiple-Scattering Microfacet Model for Real-Time Image Based Lighting"
 // Approximates multiscattering in order to preserve energy.
 // http://www.jcgt.org/published/0008/01/03/
-void BRDF_Specular_Multiscattering_Environment( const in vec3 normal, const in vec3 viewDir, const in vec3 specularColor, const in float roughness, inout vec3 singleScatter, inout vec3 multiScatter ) {
+void BRDF_Specular_Multiscattering_Environment( const in vec3 normal, const in vec3 viewDir, const in vec3 specularColor, const in float roughness, const in float f90, inout vec3 singleScatter, inout vec3 multiScatter ) {
 
 	float dotNV = saturate( dot( normal, viewDir ) );
 
-	vec3 F = F_Schlick_RoughnessDependent( specularColor, dotNV, roughness );
+	vec3 F = F_Schlick_RoughnessDependent( specularColor, dotNV, roughness, f90 );
 	vec2 brdf = integrateSpecularBRDF( dotNV, roughness );
 	vec3 FssEss = F * brdf.x + brdf.y;
 

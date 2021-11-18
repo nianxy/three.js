@@ -167,7 +167,7 @@ void RE_IndirectSpecular_Physical(
 	vec3 multiScattering = vec3( 0.0 );
 	vec3 cosineWeightedIrradiance = irradiance * RECIPROCAL_PI;
 
-	BRDF_Specular_Multiscattering_Environment( geoNormal, geometry.viewDir, material.specularColor, material.specularRoughness, singleScattering, multiScattering );
+	BRDF_Specular_Multiscattering_Environment( geoNormal, geometry.viewDir, material.specularColor, material.specularRoughness, f90, singleScattering, multiScattering );
 
 	vec3 diffuse = material.diffuseColor * ( 1.0 - ( singleScattering + multiScattering ) );
 

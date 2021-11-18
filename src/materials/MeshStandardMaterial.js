@@ -114,6 +114,8 @@ function MeshStandardMaterial( parameters ) {
 
 	this.vertexTangents = false;
 
+	this.f90 = 1.0;
+
 	this.setValues( parameters );
 
 }
@@ -178,6 +180,8 @@ MeshStandardMaterial.prototype.copy = function ( source ) {
 	this.morphNormals = source.morphNormals;
 
 	this.vertexTangents = source.vertexTangents;
+
+	this.f90 = source.f90;
 
 	return this;
 
