@@ -100,15 +100,15 @@ export default /* glsl */`
 
 		#elif defined( ENVMAP_TYPE_SPHERE )
 
-			vec3 worldOutView = normalize( ( viewMatrix * vec4( worldOutVec, 0.0 ) ).xyz + vec3( 0.0,0.0,1.0 ) );
+			vec3 viewOutVec = normalize( ( viewMatrix * vec4( worldOutVec, 0.0 ) ).xyz + vec3( 0.0,0.0,1.0 ) );
 
 			#ifdef TEXTURE_LOD_EXT
 
-				vec4 envMapColor = texture2DLodEXT( envMap, worldOutView.xy * 0.5 + 0.5, specularMIPLevel );
+				vec4 envMapColor = texture2DLodEXT( envMap, viewOutVec.xy * 0.5 + 0.5, specularMIPLevel );
 
 			#else
 
-				vec4 envMapColor = texture2D( envMap, worldOutView.xy * 0.5 + 0.5, specularMIPLevel );
+				vec4 envMapColor = texture2D( envMap, viewOutVec.xy * 0.5 + 0.5, specularMIPLevel );
 
 			#endif
 
@@ -123,6 +123,8 @@ export default /* glsl */`
 	vec3 getLightProbeIndirectRadianceReflection( /*const in SpecularLightProbe specularLightProbe,*/ const in vec3 viewDir, const in vec3 normal, const in float roughness, const in int maxMIPLevel ) {
 
 		vec3 reflectVec = reflect( -viewDir, normal );
+
+		// Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
 		reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
 
 		return getLightProbeIndirectRadiance(reflectVec, roughness, maxMIPLevel);
