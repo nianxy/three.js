@@ -2375,6 +2375,7 @@ function WebGLRenderer( parameters ) {
 
 		uniforms.roughness.value = material.roughness;
 		uniforms.metalness.value = material.metalness;
+		uniforms.f90.value = material.f90;
 
 		if ( material.roughnessMap ) {
 

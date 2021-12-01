@@ -13,6 +13,7 @@ uniform float roughness;
 uniform float metalness;
 uniform float opacity;
 uniform float refraction;
+uniform float f90;
 
 #ifdef TRANSPARENCY
 	uniform float transparency;
