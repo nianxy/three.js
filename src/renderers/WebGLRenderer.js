@@ -221,6 +221,20 @@ function WebGLRenderer( parameters ) {
 		_canvas.addEventListener( 'webglcontextlost', onContextLost, false );
 		_canvas.addEventListener( 'webglcontextrestored', onContextRestore, false );
 
+		// Trickey: after Safari 15 on Mac OS, WebGL1 context will cause infinitely page refresh, so we should try to use WebGL2 on Mac Safari
+		if ( ! _context && navigator && navigator.userAgent ) {
+
+			const userAgent = navigator.userAgent.toLowerCase();
+
+			if ( userAgent.indexOf( 'mac os' ) > 0 && userAgent.indexOf( 'iphone' ) < 0 && userAgent.indexOf( 'safari' ) > 0 ) {
+
+				delete contextAttributes.xrCompatible;
+				_context = _canvas.getContext( 'webgl2', contextAttributes );
+
+			}
+
+		}
+
 		_gl = _context || _canvas.getContext( 'webgl', contextAttributes ) || _canvas.getContext( 'experimental-webgl', contextAttributes );
 
 		if ( _gl === null ) {
