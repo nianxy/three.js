@@ -1574,6 +1574,10 @@ function WebGLRenderer( parameters ) {
 
 		var programs = materialProperties.programs;
 
+		materialProperties.environment = material.isMeshStandardMaterial ? scene.environment : null;
+		materialProperties.fog = scene.fog;
+		materialProperties.envMap = material.envMap || materialProperties.environment;
+
 		if ( programs === undefined ) {
 
 			// new material
@@ -1715,6 +1719,7 @@ function WebGLRenderer( parameters ) {
 		var fog = scene.fog;
 		var environment = material.isMeshStandardMaterial ? scene.environment : null;
 		const encoding = ( _currentRenderTarget === null ) ? _this.outputEncoding : _currentRenderTarget.texture.encoding;
+		const envMap = material.envMap || environment;
 
 		var materialProperties = properties.get( material );
 		var lights = currentRenderState.state.lights;
@@ -1757,6 +1762,10 @@ function WebGLRenderer( parameters ) {
 				needsProgramChange = true;
 
 			} else if ( ! object.isInstancedMesh && materialProperties.instancing === true ) {
+
+				needsProgramChange = true;
+
+			} else if ( materialProperties.envMap !== envMap ) {
 
 				needsProgramChange = true;
 
