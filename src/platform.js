@@ -31,7 +31,7 @@ if ( typeof window !== 'undefined' && typeof window.window !== 'undefined' ) {
 			document.createElementNS &&
 			window.requestAnimationFrame &&
 			window.cancelAnimationFrame ) {
-		
+
 		platform.updateplatform( {
 
 			AudioContext: ( window.AudioContext || window.webkitAudioContext ).bind( window ),
