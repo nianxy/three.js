@@ -64,6 +64,9 @@ class MeshStandardMaterial extends Material {
 		if ( Material.r115Compatible ) {
 
 			this.defines[ 'MULTISCATTERRING_R115_COMPATABILITY' ] = '';
+			this.defines[ 'ALPHA_R115_COMPATABILITY' ] = '';
+			this.defines[ 'PERTURB_NORMAL_R115_COMPATABILITY' ] = '';
+			this.defines[ 'CLEARCOAT_R115_COMPATABILITY' ] = '';
 
 		}
 
