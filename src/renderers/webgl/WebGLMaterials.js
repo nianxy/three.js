@@ -593,6 +593,12 @@ function WebGLMaterials( properties ) {
 
 		}
 
+		if ( material.coarseNormalMap ) {
+
+			uniforms.coarseNormalMap.value = material.coarseNormalMap;
+
+		}
+
 		if ( material.displacementMap ) {
 
 			uniforms.displacementMap.value = material.displacementMap;

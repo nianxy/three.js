@@ -29,6 +29,15 @@ export default /* glsl */`
 
 	#endif
 
+	#ifdef USE_COARSE_NORMALMAP
+
+	// https://blog.selfshadow.com/publications/blending-in-detail/
+	mapN.z += 1.0;
+	vec3 coarseMapN = texture2D( coarseNormalMap, vUv2 ).xyz * vec3( -2.0, -2.0, 2.0 ) + vec3( 1.0, 1.0, -1.0 );
+	mapN = mapN * dot( mapN, coarseMapN ) / mapN.z - coarseMapN;
+
+	#endif
+
 	mapN.xy *= normalScale;
 
 	#ifdef USE_TANGENT

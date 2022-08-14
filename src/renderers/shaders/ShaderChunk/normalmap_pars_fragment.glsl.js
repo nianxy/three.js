@@ -12,6 +12,12 @@ export default /* glsl */`
 
 #endif
 
+#ifdef USE_COARSE_NORMALMAP
+
+	uniform sampler2D coarseNormalMap;
+
+#endif
+
 #ifdef OBJECTSPACE_NORMALMAP
 
 	uniform mat3 normalMatrix;

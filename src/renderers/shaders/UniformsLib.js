@@ -71,7 +71,8 @@ const UniformsLib = {
 
 		normalMap: { value: null },
 		lowerNormalMap: { value: null },
-		normalScale: { value: new Vector2( 1, 1 ) }
+		normalScale: { value: new Vector2( 1, 1 ) },
+		coarseNormalMap: { value: null }
 
 	},
 
