@@ -127,6 +127,12 @@ function WebGLMaterials( properties ) {
 
 		}
 
+		if ( material.coarseMap ) {
+
+			uniforms.coarseMap.value = material.coarseMap;
+
+		}
+
 		if ( material.alphaMap ) {
 
 			uniforms.alphaMap.value = material.alphaMap;

@@ -153,6 +153,8 @@ function WebGLPrograms( renderer, cubemaps, cubeuvmaps, extensions, capabilities
 			outputEncoding: ( currentRenderTarget !== null ) ? renderer.getTextureEncodingFromMap( currentRenderTarget.texture ) : renderer.outputEncoding,
 			map: !! material.map,
 			mapEncoding: renderer.getTextureEncodingFromMap( material.map ),
+			coarseMap: !! material.coarseMap,
+			coarseMapEncoding: renderer.getTextureEncodingFromMap( material.coarseMap ),
 			matcap: !! material.matcap,
 			matcapEncoding: renderer.getTextureEncodingFromMap( material.matcap ),
 			envMap: !! envMap,

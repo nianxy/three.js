@@ -445,6 +445,7 @@ function WebGLProgram( renderer, cacheKey, parameters, bindingStates ) {
 			( parameters.useFog && parameters.fogExp2 ) ? '#define FOG_EXP2' : '',
 
 			parameters.map ? '#define USE_MAP' : '',
+			parameters.coarseMap ? '#define USE_COARSE_MAP' : '',
 			parameters.envMap ? '#define USE_ENVMAP' : '',
 			parameters.envMap ? '#define ' + envMapModeDefine : '',
 			parameters.lightMap ? '#define USE_LIGHTMAP' : '',
@@ -593,6 +594,7 @@ function WebGLProgram( renderer, cacheKey, parameters, bindingStates ) {
 			( parameters.useFog && parameters.fogExp2 ) ? '#define FOG_EXP2' : '',
 
 			parameters.map ? '#define USE_MAP' : '',
+			parameters.coarseMap ? '#define USE_COARSE_MAP' : '',
 			parameters.matcap ? '#define USE_MATCAP' : '',
 			parameters.envMap ? '#define USE_ENVMAP' : '',
 			parameters.envMap ? '#define ' + envMapTypeDefine : '',
@@ -669,6 +671,7 @@ function WebGLProgram( renderer, cacheKey, parameters, bindingStates ) {
 
 			ShaderChunk[ 'encodings_pars_fragment' ], // this code is required here because it is used by the various encoding/decoding function defined below
 			parameters.map ? getTexelDecodingFunction( 'mapTexelToLinear', parameters.mapEncoding ) : '',
+			parameters.coarseMap ? getTexelDecodingFunction( 'coarseMapTexelToLinear', parameters.coarseMapEncoding ) : '',
 			parameters.matcap ? getTexelDecodingFunction( 'matcapTexelToLinear', parameters.matcapEncoding ) : '',
 			parameters.envMap ? getTexelDecodingFunction( 'envMapTexelToLinear', parameters.envMapEncoding ) : '',
 			parameters.emissiveMap ? getTexelDecodingFunction( 'emissiveMapTexelToLinear', parameters.emissiveMapEncoding ) : '',

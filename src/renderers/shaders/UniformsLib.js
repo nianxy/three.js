@@ -14,6 +14,7 @@ const UniformsLib = {
 		opacity: { value: 1.0 },
 
 		map: { value: null },
+		coarseMap: { value: null },
 		uvTransform: { value: new Matrix3() },
 		uv2Transform: { value: new Matrix3() },
 
