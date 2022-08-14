@@ -179,6 +179,12 @@ function WebGLMaterials( properties ) {
 
 		}
 
+		if ( material.detailedAoMap ) {
+
+			uniforms.detailedAoMap.value = material.detailedAoMap;
+
+		}
+
 		// uv repeat and offset setting priorities
 		// 1. color map
 		// 2. specular map

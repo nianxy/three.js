@@ -164,6 +164,7 @@ function WebGLPrograms( renderer, cubemaps, cubeuvmaps, extensions, capabilities
 			lightMap: !! material.lightMap,
 			lightMapEncoding: renderer.getTextureEncodingFromMap( material.lightMap ),
 			aoMap: !! material.aoMap,
+			detailedAoMap: !! material.detailedAoMap,
 			emissiveMap: !! material.emissiveMap,
 			emissiveMapEncoding: renderer.getTextureEncodingFromMap( material.emissiveMap ),
 			bumpMap: !! material.bumpMap,

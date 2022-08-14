@@ -5,4 +5,10 @@ export default /* glsl */`
 	uniform float aoMapIntensity;
 
 #endif
+
+#ifdef USE_DETAILED_AOMAP
+
+	uniform sampler2D detailedAoMap;
+
+#endif
 `;

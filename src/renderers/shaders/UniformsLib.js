@@ -42,7 +42,8 @@ const UniformsLib = {
 	aomap: {
 
 		aoMap: { value: null },
-		aoMapIntensity: { value: 1 }
+		aoMapIntensity: { value: 1 },
+		detailedAoMap: { value: null },
 
 	},
 

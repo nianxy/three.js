@@ -1,8 +1,20 @@
 export default /* glsl */`
-#ifdef USE_AOMAP
+#if defined(USE_AOMAP) || defined(USE_DETAILED_AOMAP)
+
+	float ambientOcclusion = 1.0;
+
+	#ifdef USE_AOMAP
 
 	// reads channel R, compatible with a combined OcclusionRoughnessMetallic (RGB) texture
-	float ambientOcclusion = ( texture2D( aoMap, vUv2 ).r - 1.0 ) * aoMapIntensity + 1.0;
+	ambientOcclusion *= ( texture2D( aoMap, vUv2 ).r - 1.0 ) * aoMapIntensity + 1.0;
+
+	#endif
+
+	#ifdef USE_DETAILED_AOMAP
+
+	ambientOcclusion *= texture2D( detailedAoMap, vUv ).r;
+
+	#endif
 
 	reflectedLight.indirectDiffuse *= ambientOcclusion;
 
