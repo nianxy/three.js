@@ -564,6 +564,12 @@ function WebGLMaterials( properties ) {
 
 		}
 
+		if ( material.coarseRoughnessMap ) {
+
+			uniforms.coarseRoughnessMap.value = material.coarseRoughnessMap;
+
+		}
+
 		if ( material.metalnessMap ) {
 
 			uniforms.metalnessMap.value = material.metalnessMap;

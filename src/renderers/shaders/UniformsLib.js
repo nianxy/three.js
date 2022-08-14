@@ -86,7 +86,8 @@ const UniformsLib = {
 
 	roughnessmap: {
 
-		roughnessMap: { value: null }
+		roughnessMap: { value: null },
+		coarseRoughnessMap: { value: null }
 
 	},
 

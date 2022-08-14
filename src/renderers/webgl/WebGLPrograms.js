@@ -181,6 +181,7 @@ function WebGLPrograms( renderer, cubemaps, cubeuvmaps, extensions, capabilities
 
 			displacementMap: !! material.displacementMap,
 			roughnessMap: !! material.roughnessMap,
+			coarseRoughnessMap: !! material.coarseRoughnessMap,
 			metalnessMap: !! material.metalnessMap,
 			specularMap: !! material.specularMap,
 			specularIntensityMap: !! material.specularIntensityMap,

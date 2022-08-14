@@ -9,4 +9,12 @@ float roughnessFactor = roughness;
 	roughnessFactor *= texelRoughness.g;
 
 #endif
+
+#ifdef USE_COARSE_ROUGHNESSMAP
+
+	vec4 coarseTexelRoughness = texture2D( coarseRoughnessMap, vUv2 );
+
+	roughnessFactor *= coarseTexelRoughness.g;
+
+#endif
 `;
