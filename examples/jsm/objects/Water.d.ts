@@ -14,6 +14,7 @@ export interface WaterOptions {
     distortionScale?: number;
     side?: Side;
     fog?: boolean;
+    objectSpaceNormal?: Vector3;
 }
 
 export class Water extends Mesh {

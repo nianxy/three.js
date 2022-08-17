@@ -42,6 +42,7 @@ class Water extends Mesh {
 		const distortionScale = options.distortionScale !== undefined ? options.distortionScale : 20.0;
 		const side = options.side !== undefined ? options.side : FrontSide;
 		const fog = options.fog !== undefined ? options.fog : false;
+		const objectSpaceNormal = options.objectSpaceNormal !== undefined ? options.objectSpaceNormal : new Vector3( 0, 0, 1 );
 
 		//
 
@@ -216,7 +217,7 @@ class Water extends Mesh {
 
 			rotationMatrix.extractRotation( scope.matrixWorld );
 
-			normal.set( 0, 0, 1 );
+			normal.copy( objectSpaceNormal );
 			normal.applyMatrix4( rotationMatrix );
 
 			view.subVectors( mirrorWorldPosition, cameraWorldPosition );
