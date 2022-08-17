@@ -73,6 +73,11 @@ export class MeshStandardMaterial extends Material {
     /**
      * @default null
      */
+    coarseMap: Texture | null;
+
+    /**
+     * @default null
+     */
     lightMap: Texture | null;
 
     /**
@@ -89,6 +94,11 @@ export class MeshStandardMaterial extends Material {
      * @default 1
      */
     aoMapIntensity: number;
+
+    /**
+     * @default null
+     */
+    detailedAoMap: Texture | null;
 
     /**
      * @default new THREE.Color( 0x000000 )
@@ -121,6 +131,16 @@ export class MeshStandardMaterial extends Material {
     normalMap: Texture | null;
 
     /**
+     * @default null
+     */
+    lowerNormalMap: Texture | null;
+
+    /**
+     * @default null
+     */
+    coarseNormalMap: Texture | null;
+
+    /**
      * @default THREE.TangentSpaceNormalMap
      */
     normalMapType: NormalMapTypes;
@@ -149,6 +169,11 @@ export class MeshStandardMaterial extends Material {
      * @default null
      */
     roughnessMap: Texture | null;
+
+    /**
+     * @default null
+     */
+    coarseRoughnessMap: Texture | null;
 
     /**
      * @default null

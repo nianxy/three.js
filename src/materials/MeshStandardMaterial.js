@@ -78,12 +78,14 @@ class MeshStandardMaterial extends Material {
 		this.f90 = 1.0;
 
 		this.map = null;
+		this.coarseMap = null;
 
 		this.lightMap = null;
 		this.lightMapIntensity = 1.0;
 
 		this.aoMap = null;
 		this.aoMapIntensity = 1.0;
+		this.detailedAoMap = null;
 
 		this.emissive = new Color( 0x000000 );
 		this.emissiveIntensity = 1.0;
@@ -94,6 +96,7 @@ class MeshStandardMaterial extends Material {
 
 		this.normalMap = null;
 		this.lowerNormalMap = null;
+		this.coarseNormalMap = null;
 		this.normalMapType = TangentSpaceNormalMap;
 		this.normalScale = new Vector2( 1, 1 );
 
@@ -102,6 +105,7 @@ class MeshStandardMaterial extends Material {
 		this.displacementBias = 0;
 
 		this.roughnessMap = null;
+		this.coarseRoughnessMap = null;
 
 		this.metalnessMap = null;
 
@@ -154,12 +158,14 @@ class MeshStandardMaterial extends Material {
 		this.f90 = source.f90;
 
 		this.map = source.map;
+		this.coarseMap = source.coarseMap;
 
 		this.lightMap = source.lightMap;
 		this.lightMapIntensity = source.lightMapIntensity;
 
 		this.aoMap = source.aoMap;
 		this.aoMapIntensity = source.aoMapIntensity;
+		this.detailedAoMap = source.detailedAoMap;
 
 		this.emissive.copy( source.emissive );
 		this.emissiveMap = source.emissiveMap;
@@ -170,6 +176,7 @@ class MeshStandardMaterial extends Material {
 
 		this.normalMap = source.normalMap;
 		this.lowerNormalMap = source.lowerNormalMap;
+		this.coarseNormalMap = source.coarseNormalMap;
 		this.normalMapType = source.normalMapType;
 		this.normalScale.copy( source.normalScale );
 
@@ -178,6 +185,7 @@ class MeshStandardMaterial extends Material {
 		this.displacementBias = source.displacementBias;
 
 		this.roughnessMap = source.roughnessMap;
+		this.coarseRoughnessMap = source.coarseRoughnessMap;
 
 		this.metalnessMap = source.metalnessMap;
 
