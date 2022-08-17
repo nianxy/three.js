@@ -11,7 +11,7 @@ import {
 	Vector3,
 	Vector4,
 	WebGLRenderTarget
-} from 'three';
+} from '@oppentech/three';
 
 /**
  * Work based on :
@@ -179,7 +179,9 @@ class Water extends Mesh {
 					gl_FragColor = vec4( outgoingLight, alpha );
 
 					#include <tonemapping_fragment>
+					#include <encodings_fragment>
 					#include <fog_fragment>
+					#include <premultiplied_alpha_fragment>
 				}`
 
 		};
